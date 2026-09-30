@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#7c3aed" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='52' font-size='52'%3E👑%3C/text%3E%3C/svg%3E" />
+  <title>Hansi Verification Challenge</title>
+  <style>
+    :root { --ink:#28124f; --violet:#6d28d9; --purple:#8b5cf6; --pink:#ec4899; --cream:#fff8ff; --white:#fff; --error:#be185d; --shadow:0 18px 45px rgba(73,24,140,.24); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100svh; color:var(--ink); font-family:ui-rounded, "Nunito", "Arial Rounded MT Bold", system-ui, sans-serif; background:linear-gradient(145deg,#8b5cf6 0%,#d946ef 47%,#fb7185 100%); display:grid; place-items:center; padding:18px; overflow-x:hidden; }
+    body::before, body::after { content:""; position:fixed; width:260px; height:260px; border-radius:50%; filter:blur(7px); opacity:.24; pointer-events:none; }
+    body::before { background:#fde68a; top:-90px; left:-100px; } body::after { background:#bfdbfe; right:-120px; bottom:-100px; }
+    .phone { width:min(100%,420px); min-height:min(760px,calc(100svh - 36px)); background:rgba(255,255,255,.88); backdrop-filter:blur(12px); border:5px solid rgba(255,255,255,.62); border-radius:37px; box-shadow:var(--shadow); padding:18px; display:flex; flex-direction:column; position:relative; overflow:hidden; }
+    .top { display:flex; align-items:center; justify-content:space-between; padding:2px 4px 14px; gap:12px; }
+    .brand { font-weight:900; font-size:.85rem; letter-spacing:.03em; color:var(--violet); }
+    .step { font-size:.75rem; font-weight:800; color:#7c3aed; padding:7px 10px; background:#f3e8ff; border-radius:999px; white-space:nowrap; }
+    .progress { height:8px; background:#eadbff; border-radius:100px; overflow:hidden; margin:0 4px 20px; }
+    .progress span { display:block; height:100%; width:14.28%; background:linear-gradient(90deg,var(--violet),var(--pink)); border-radius:inherit; transition:width .45s ease; }
+    main { flex:1; display:flex; align-items:center; }
+    .screen { width:100%; display:none; animation:in .42s ease both; text-align:center; }
+    .screen.active { display:block; } @keyframes in { from {opacity:0; transform:translateY(12px) scale(.98)} to {opacity:1; transform:translateY(0) scale(1)} }
+    .emoji { font-size:4.15rem; line-height:1; margin:8px 0 16px; display:block; animation:bob 2.7s ease-in-out infinite; } @keyframes bob { 50% { transform:translateY(-7px) rotate(3deg) } }
+    h1 { font-size:clamp(1.8rem,7.6vw,2.35rem); line-height:1.05; margin:0 0 12px; letter-spacing:-.045em; }
+    h1 .accent { color:var(--pink); } p { margin:0 auto; max-width:320px; color:#563d76; font-size:1rem; line-height:1.5; }
+    .card { margin:24px 0 0; background:var(--white); border-radius:23px; padding:19px; box-shadow:0 10px 25px rgba(102,45,145,.1); text-align:left; }
+    label { display:block; font-size:.88rem; font-weight:900; margin-bottom:8px; }
+    input { width:100%; border:2px solid #e5d1ff; border-radius:15px; padding:15px; font:inherit; font-size:1rem; outline:none; color:var(--ink); transition:.2s; } input:focus { border-color:var(--purple); box-shadow:0 0 0 4px #ede9fe; }
+    button { width:100%; border:0; cursor:pointer; margin-top:14px; padding:15px 16px; border-radius:15px; color:white; background:linear-gradient(100deg,var(--violet),var(--pink)); font:900 1rem/1 ui-rounded,system-ui,sans-serif; box-shadow:0 8px 16px rgba(190,24,93,.22); transition:transform .18s ease, box-shadow .18s ease; } button:hover { transform:translateY(-2px); box-shadow:0 11px 20px rgba(190,24,93,.3); } button:active { transform:translateY(1px); }
+    .note { min-height:23px; color:var(--error); font-size:.86rem; font-weight:800; line-height:1.35; margin:12px 4px 0; text-align:center; }
+    .choices { display:grid; gap:9px; margin-top:21px; text-align:left; }
+    .choice { display:flex; align-items:center; gap:11px; background:#fff; border:2px solid #f0e7fb; border-radius:15px; padding:12px; font-weight:800; cursor:pointer; transition:.2s; } .choice:hover { border-color:#d8b4fe; transform:translateX(2px); } .choice input { width:19px; height:19px; accent-color:var(--pink); flex:none; }
+    .fact { background:linear-gradient(135deg,#fff1fb,#f5edff); padding:16px; border-radius:18px; text-align:left; margin-top:21px; font-weight:800; color:#6b2184; line-height:1.45; }
+    .mini-list { display:grid; gap:10px; margin-top:22px; text-align:left; } .mini-list div { padding:13px 14px; border-radius:15px; background:#fff; box-shadow:0 7px 17px rgba(87,35,133,.09); font-weight:800; }
+    .certificate { margin-top:22px; background:linear-gradient(145deg,#6d28d9,#a21caf); color:white; border-radius:24px; padding:23px 18px; box-shadow:0 13px 28px rgba(91,29,149,.3); } .certificate small { font-weight:900; letter-spacing:.13em; } .certificate h2 { font-size:1.5rem; margin:12px 0 8px; line-height:1.1; } .certificate p { color:#fae8ff; font-size:.9rem; }
+    .final { background:linear-gradient(155deg,#fff1fb,#f5edff); padding:17px 13px 4px; border-radius:26px; } .final h1 { font-size:2.05rem; } .final-message { background:white; border-radius:19px; padding:17px; margin-top:17px; line-height:1.55; color:#512d72; font-weight:650; box-shadow:0 8px 18px rgba(117,42,151,.1); }
+      .crown-photo { width:min(100%,255px); height:auto; display:block; margin:2px auto 16px; filter:drop-shadow(0 13px 14px rgba(172,42,132,.28)); }
+    .crown-caption { display:inline-block; margin:-7px 0 13px; background:#fce7f3; color:#9d174d; font-size:.82rem; font-weight:900; padding:7px 12px; border-radius:999px; }
+    .tiny { font-size:.78rem; opacity:.75; margin-top:18px; }
+    .restart { background:#f3e8ff; color:#6d28d9; box-shadow:none; }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header class="top"><div class="brand">VERIFICATION</div><div class="step" id="stepLabel">STEP 1 / 7</div></header>
+    <div class="progress" aria-label="Challenge progress"><span id="bar"></span></div>
+    <main>
+      <section class="screen active" data-step="1">
+        <span class="emoji">🪪</span><h1>Welcome to the <span class="accent">official</span> Personality check.</h1>
+        <p>Only one very special tiny person may continue.</p>
+        <form class="card" id="nameForm"><label for="name">First, type your name</label><input id="name" autocomplete="off" placeholder="Your name..." /><button type="submit">Verify me!</button><div class="note" id="nameNote" aria-live="polite"></div></form>
+      </section>
+      <section class="screen" data-step="2">
+        <span class="emoji">📏</span><h1>Important <span class="accent">height</span> research.</h1><p>Please select the category that honestly represents you.</p>
+        <form id="heightForm" class="choices">
+          <label class="choice"><input type="radio" name="height" value="tall">Tall queen — reaches the top shelf</label>
+          <label class="choice"><input type="radio" name="height" value="average">Average — sometimes reaches it</label>
+          <label class="choice"><input type="radio" name="height" value="compact">Compact — asks nicely</label>
+          <label class="choice"><input type="radio" name="height" value="short">Short — small but powerful</label>
+          <label class="choice"><input type="radio" name="height" value="shortest">The shortest category — clearly Hansi</label>
+          <button type="submit">Submit my totally real height</button><div class="note" id="heightNote" aria-live="polite"></div>
+        </form>
+      </section>
+      <section class="screen" data-step="3">
+        <span class="emoji">🏆</span><h1>Verified! You reached the next page.</h1><p>Without a stool. A historic achievement.</p><div class="fact">✨ Official result: Hansi is <strong>small in height</strong>, but absolutely enormous in attitude.</div><button data-next>Accept this scientific fact</button>
+      </section>
+      <section class="screen" data-step="4">
+        <span class="emoji">🦸‍♀️</span><h1>Short-person superpowers</h1><p>Not everyone is chosen for these rare abilities.</p><div class="mini-list"><div>🕵️ Can hide behind almost any tall person</div><div>🎯 Always gets the best space in photos</div><div>⚡ Small size, maximum drama power</div></div><button data-next>I admit these are true</button>
+      </section>
+      <section class="screen" data-step="5">
+        <span class="emoji">🍬</span><h1>A quick message from the Height Department</h1><p>They tried to give you extra centimetres...</p><div class="fact">But the delivery truck could not find you because you were below the dashboard.</div><button data-next>That was unnecessary 😤</button>
+      </section>
+      <section class="screen" data-step="6">
+        <span class="emoji">👑</span><h1>Your official title has arrived.</h1><div class="certificate"><small>CERTIFIED BY THE FUN POLICE</small><h2>Hansi, the Cute &amp; Mighty Mini Queen</h2><p>Small package. Legendary personality. No refunds.</p></div><button data-next>Receive my crown</button>
+      </section>
+      <section class="screen" data-step="7">
+        <div class="final"><img class="crown-photo" src="assets/hansi-princess.png" alt="Hansi wearing her crown and pink princess frock" /><div class="crown-caption">👑 Crown successfully received!</div><h1>Happy <span class="accent">Children’s Day</span>, Modi!</h1><div class="final-message">Yes, you may be short — but your kindness, laughter, and special place in everyone’s heart are huge. Keep smiling, being playful, and making people happy. Never let anyone measure your value by your height. You are loved very much. 💖</div></div><p class="tiny">From your Ayya, with a little teasing and lots of love.</p><button class="restart" id="restart">Play the challenge again</button>
+      </section>
+    </main>
+  </div>
+  <script>
+    const screens=[...document.querySelectorAll('.screen')], bar=document.querySelector('#bar'), label=document.querySelector('#stepLabel'); let current=1;
+    function go(step){ current=step; screens.forEach(s=>s.classList.toggle('active',+s.dataset.step===step)); label.textContent=`STEP ${step} / 7`; bar.style.width=`${step/7*100}%`; }
+    document.querySelector('#nameForm').addEventListener('submit',e=>{e.preventDefault();const input=document.querySelector('#name'),note=document.querySelector('#nameNote'),name=input.value.trim().toLowerCase().replace(/\s+/g,' ');if(name==='moda hansi'){go(2)}else{note.textContent='You are wrong 😌 Correct name is Moda Hansi. Please continue by typing “Moda Hansi”.';input.focus();}});
+    document.querySelector('#heightForm').addEventListener('submit',e=>{e.preventDefault();const selected=document.querySelector('input[name="height"]:checked'),note=document.querySelector('#heightNote');if(!selected){note.textContent='Choose a category first, tiny investigator!';return}if(selected.value!=='shortest'){note.textContent='Please eat some Kawpi, and select the shortest category. Because you are short. 😌';return}go(3)});
+    document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>go(current+1)));
+    document.querySelector('#restart').addEventListener('click',()=>{document.querySelector('#name').value='';document.querySelector('#nameNote').textContent='';document.querySelector('#heightNote').textContent='';document.querySelectorAll('input[name="height"]').forEach(i=>i.checked=false);go(1)});
+  </script>
+</body>
+</html>
